@@ -84,7 +84,7 @@ class AuthController extends Controller
     //     return response()->json(compact('user','token'),201);
     // }
 
-    public function getuserdata(){
+    public function getuserdata(Request $request){
         // return app('filesystem');
         // \Storage::disk('public')->put('file.txt', 'Contents');
         // return public_path('storage');
@@ -97,7 +97,7 @@ class AuthController extends Controller
         ]);
     }
     
-    public function logout(){
+    public function logout(Request $request){
         auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }

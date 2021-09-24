@@ -30,3 +30,4 @@ RewriteEngine On
 
 
  RedirectMatch 404 /\.git
+ 

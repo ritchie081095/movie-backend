@@ -62,6 +62,7 @@ $app->singleton(
 
 $app->configure('auth');
 $app->configure('filesystems');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,12 +77,14 @@ $app->configure('filesystems');
 
 $app->middleware([
     // App\Http\Middleware\ExampleMiddleware::class
-    \App\Http\Middleware\Cors::class
+    // \App\Http\Middleware\Cors::class,
+    Fruitcake\Cors\HandleCors::class,
 ]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
-    'cors' => \App\Http\Middleware\CORS::class,
+    // 'cors' => Fruitcake\Cors\HandleCors::class,
+    // 'cors' => \App\Http\Middleware\Cors::class,
 ]);
 
 /*
@@ -95,7 +98,7 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
@@ -103,7 +106,7 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Yajra\DataTables\DataTablesServiceProvider::class);
 $app->register(Yajra\DataTables\DataTablesServiceProvider::class);
 $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
-
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
