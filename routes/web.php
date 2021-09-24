@@ -19,21 +19,17 @@ $router->get('/', function () use ($router) {
 
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    // $router->group(['middleware' => 'cors'], function () use ($router) {
+
+    $router->post('/register', 'AuthController@register');
+    $router->post('/login', 'AuthController@authenticate');
 
 
-        $router->post('/register', 'AuthController@register');
-        $router->post('/login', 'AuthController@authenticate');
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        $router->get('/getuserdata', 'AuthController@getuserdata');
+        $router->get('/logout', 'AuthController@logout');
 
-
-        $router->group(['middleware' => 'auth'], function () use ($router) {
-            $router->get('/getuserdata', 'AuthController@getuserdata');
-            $router->get('/logout', 'AuthController@logout');
-
-            resource('user', "API\UserManagementController", $router);
-        });
-
-    // });
+        resource('user', "API\UserManagementController", $router);
+    });
 });
 
 
