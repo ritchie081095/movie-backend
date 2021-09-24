@@ -30,12 +30,33 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->post('/getuserdata', 'AuthController@getuserdata');
         $router->post('/logout', 'AuthController@logout');
-        
-        $router->get('/user', 'API\UserManagementController@index');
-        $router->post('/user', 'API\UserManagementController@store');
-        $router->put('/user/{id}', 'API\UserManagementController@update');
-        $router->delete('/user/{id}', 'API\UserManagementController@destroy');
+
+        resource('user', "API\UserManagementController", $router);
     });
 
     
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+function resource($uri, $controller, $router)
+{
+	$router->get($uri, $controller.'@index');
+	$router->get($uri.'/create', $controller.'@create');
+	$router->post($uri, $controller.'@store');
+	$router->get($uri.'/{id}', $controller.'@show');
+	$router->get($uri.'/{id}/edit', $controller.'@edit');
+	$router->put($uri.'/{id}', $controller.'@update');
+	$router->patch($uri.'/{id}', $controller.'@update');
+	$router->delete($uri.'/{id}', $controller.'@destroy');
+}
