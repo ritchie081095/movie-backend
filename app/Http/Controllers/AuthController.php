@@ -85,6 +85,12 @@ class AuthController extends Controller
     // }
 
     public function getuserdata(){
+        // return app('filesystem');
+        // \Storage::disk('public')->put('file.txt', 'Contents');
+        // return public_path('storage');
+
+        // return storage_path();
+
         $user = Auth::user();
         return response()->json([
             'user' => $user,

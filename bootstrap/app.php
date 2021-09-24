@@ -61,6 +61,7 @@ $app->singleton(
 */
 
 $app->configure('auth');
+$app->configure('filesystems');
 
 /*
 |--------------------------------------------------------------------------
@@ -73,12 +74,14 @@ $app->configure('auth');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    // App\Http\Middleware\ExampleMiddleware::class
+    \App\Http\Middleware\Cors::class
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'cors' => \App\Http\Middleware\CORS::class,
 ]);
 
 /*
@@ -98,6 +101,9 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Yajra\DataTables\DataTablesServiceProvider::class);
+$app->register(Yajra\DataTables\DataTablesServiceProvider::class);
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
