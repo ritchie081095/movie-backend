@@ -28,6 +28,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/getuserdata', 'AuthController@getuserdata');
         $router->get('/logout', 'AuthController@logout');
 
+        $router->post('/twofactor_verify', 'TwoFactorController@twofactor_verify');
+        $router->post('/twofactor_cancellogin', 'TwoFactorController@twofactor_cancellogin');
+        $router->post('/twofactor_resend', 'TwoFactorController@twofactor_resend');
+
         resource('user', "API\UserManagementController", $router);
     });
 });

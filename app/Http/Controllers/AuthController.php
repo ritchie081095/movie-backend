@@ -41,9 +41,9 @@ class AuthController extends Controller
     public function getuserinfo($request){
         $two_factor_auth = false;
         if(auth()->check() && ($two_factor_auth == true)){
-        //     $user = auth()->user();
-        //     $twoFactorCode = $user->generateTwoFactorCode();
-        //     $user->sendTwoFactorEmail($twoFactorCode);
+            $user = auth()->user();
+            $twoFactorCode = $user->generateTwoFactorCode();
+            $user->sendTwoFactorEmail($twoFactorCode);
         }
 
         $user = auth()->user();

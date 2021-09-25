@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class UserManagementController extends Controller
 {
     public function index(Request $request){
-        $query = User::query();
+        $query = User::where('id', '!=', 1);
         return DataTables::of($query)->make(true);
     }
 
@@ -40,6 +40,12 @@ class UserManagementController extends Controller
     }
 
     public function update(Request $request, $id){
+
+        if($request->iseditaccountinfo){
+            return $this->editaccountinfo($request);
+        }
+
+
         $this->field_validate($request);
         $this->validate($request,
         [

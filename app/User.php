@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+use App\UserAuthFactor;
+use App\Notifications\TwoFactorCode;
+use Carbon\Carbon;
+
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable;
@@ -54,5 +58,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function generateTwoFactorCode(){
+        $query = UserAuthFactor::create([
+            "user_id" => auth()->user()->id,
+            "two_factor_code" => rand(100000, 999999),
+            "two_factor_expires_at" => Carbon::now()->addMinutes(10),
+        ]);
+        return $query;
+    }
+
+    public function resetTwoFactorCode(){
+        UserAuthFactor::where('user_id', auth()->user()->id)->delete();
+    }
+
+    public function sendTwoFactorEmail($data){
+        $user = auth()->user();
+        // $user->notify(new TwoFactorCode($data));
     }
 }
