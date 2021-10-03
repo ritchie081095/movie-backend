@@ -20,33 +20,11 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-    $router->post('/register', 'AuthController@register');
-    $router->post('/login', 'AuthController@authenticate');
+   
 
-
-    $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('/getuserdata', 'AuthController@getuserdata');
-        $router->get('/logout', 'AuthController@logout');
-
-        $router->post('/twofactor_verify', 'TwoFactorController@twofactor_verify');
-        $router->post('/twofactor_cancellogin', 'TwoFactorController@twofactor_cancellogin');
-        $router->post('/twofactor_resend', 'TwoFactorController@twofactor_resend');
-
-        resource('user', "API\UserManagementController", $router);
-    });
+      resource('movie', "API\MovieController", $router);
+      $router->post('/searchMovies', 'API\MovieController@searchMovies');
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 function resource($uri, $controller, $router)
 {
